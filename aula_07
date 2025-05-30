@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Exemplo de estilos</title>
+<style>
+  /* 1 - Todos os campos required com borda vermelha */
+  input[required], textarea[required], select[required] {
+    border: 2px solid red;
+  }
+
+  /* 2 - Input password com fundo cinza claro */
+  input[type="password"] {
+    background-color: #d3d3d3; /* cinza claro */
+  }
+
+  /* 3 - Links que começam com https com cor verde */
+  a[href^="https"] {
+    color: green;
+  }
+
+  /* 4 - Links que terminam em pdf em cor rosa */
+  a[href$=".pdf"] {
+    color: pink;
+  }
+
+  /* 5 - Links que contém "exemplo" em negrito */
+  a[href*="exemplo"] {
+    font-weight: bold;
+  }
+
+  /* 6 - Div com palavra ativo destacada em azul claro */
+  /* Aplicar estilo à div que contenha a palavra 'ativo' no seu texto */
+  div:has(:scope:contains("ativo")) {
+    background-color: #add8e6; /* azul claro */
+  }
+
+  /* Porém, :has e :contains não são suportados nativamente em CSS.
+     Usamos JS para aplicar a classe, veja abaixo */
+
+  /* Classe para destacar o fundo azul claro */
+  .destacar-ativo {
+    background-color: #add8e6; /* azul claro */
+  }
+
+  /* 7 - Parágrafos com atributo lang começando em "pt" em verde */
+  p[lang^="pt"] {
+    color: green;
+  }
+</style>
+</head>
+<body>
+
+<form>
+  <label for="nome">Nome (required):</label>
+  <input type="text" id="nome" name="nome" required /><br/><br/>
+
+  <label for="senha">Senha (password):</label>
+  <input type="password" id="senha" name="senha" required /><br/><br/>
+</form>
+
+<p lang="pt-BR">Este parágrafo está em português e deve aparecer em verde.</p>
+<p lang="en">This paragraph is in English.</p>
+
+<div id="div1">Este div contém a palavra ativo e deve ter fundo azul claro.</div>
+<div id="div2">Este div não tem a palavra mágica.</div>
+
+<a href="https://www.google.com">Link https verde</a><br/>
+<a href="http://www.exemplo.com">Link com exemplo em negrito</a><br/>
+<a href="https://www.site.com/documento.pdf">Link pdf rosa e https verde (veremos a cor que prevalece)</a><br/>
+<a href="https://www.exemplo.com/arquivo.pdf">Link com exemplo, pdf e https (bold, rosa e verde? Será aplicado o que mais específico)</a>
+
+<script>
+  // Como CSS puro não suporta :has() e :contains(), usamos JS para destacar div com palavra 'ativo'
+  document.querySelectorAll('div').forEach(div => {
+    if(div.textContent.toLowerCase().includes('ativo')) {
+      div.classList.add('destacar-ativo');
+    }
+  });
+</script>
+
+</body>
+</html>
